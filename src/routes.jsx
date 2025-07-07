@@ -2,7 +2,6 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import AdminLayout from "./components/layout/AdminLayout";
 
-// Import modules (we'll create these next)
 import Dashboard from "./modules/dashboard";
 import Users from "./modules/users";
 import Plans from "./modules/plans";
@@ -11,14 +10,10 @@ import Chats from "./modules/chats";
 import Reviews from "./modules/reviews";
 import Financial from "./modules/financial";
 import Verification from "./modules/verification";
-
-// Placeholder components for modules we haven't built yet
-const PlaceholderComponent = ({ title }) => (
-    <div style={{ textAlign: "center", padding: "50px" }}>
-        <h2>{title}</h2>
-        <p>Coming in Phase 4...</p>
-    </div>
-);
+import Disputes from "./modules/disputes";
+import Subscriptions from "./modules/subscriptions";
+import Reports from "./modules/reports";
+import System from "./modules/system";
 
 export const router = createBrowserRouter([
     {
@@ -89,7 +84,7 @@ export const router = createBrowserRouter([
         path: "/disputes",
         element: (
             <AdminLayout>
-                <PlaceholderComponent title="Dispute Resolution" />
+                <Disputes />
             </AdminLayout>
         ),
     },
@@ -97,7 +92,7 @@ export const router = createBrowserRouter([
         path: "/subscriptions",
         element: (
             <AdminLayout>
-                <PlaceholderComponent title="Subscription Management" />
+                <Subscriptions />
             </AdminLayout>
         ),
     },
@@ -105,7 +100,7 @@ export const router = createBrowserRouter([
         path: "/reports",
         element: (
             <AdminLayout>
-                <PlaceholderComponent title="Reports & Analytics" />
+                <Reports />
             </AdminLayout>
         ),
     },
@@ -113,7 +108,7 @@ export const router = createBrowserRouter([
         path: "/system",
         element: (
             <AdminLayout>
-                <PlaceholderComponent title="System Administration" />
+                <System />
             </AdminLayout>
         ),
     },

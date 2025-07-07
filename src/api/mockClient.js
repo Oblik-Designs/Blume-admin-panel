@@ -7,41 +7,55 @@ export class MockApiClient {
             ? APP_CONFIG.MOCK_ERROR_RATE
             : 0;
     }
+
     async simulateDelay() {
         await new Promise((resolve) => setTimeout(resolve, this.delay));
     }
+
     async simulateError() {
         if (this.errorRate > 0 && Math.random() < this.errorRate) {
             throw new Error("Simulated API error - please try again");
         }
     }
+
+    //-----------------------------------------------------------
     // Users API
+    //-----------------------------------------------------------
+
     async getUsers(params = {}) {
         await this.simulateDelay();
         await this.simulateError();
         return mockDataManager.getUsers(params);
     }
+
     async createUser(userData) {
         await this.simulateDelay();
         await this.simulateError();
         return mockDataManager.createUser(userData);
     }
+
     async updateUser(id, userData) {
         await this.simulateDelay();
         await this.simulateError();
         return mockDataManager.updateUser(id, userData);
     }
+
     async deleteUser(id) {
         await this.simulateDelay();
         await this.simulateError();
         return mockDataManager.deleteUser(id);
     }
+
+    //-----------------------------------------------------------
     // Plans API
+    //-----------------------------------------------------------
+
     async getPlans(params = {}) {
         await this.simulateDelay();
         await this.simulateError();
         return mockDataManager.getPlans(params);
     }
+
     async createPlan(planData) {
         await this.simulateDelay();
         await this.simulateError();
@@ -57,7 +71,9 @@ export class MockApiClient {
         return newPlan;
     }
 
-    // Add this method to your MockApiClient class in src/api/mockClient.js
+    //-----------------------------------------------------------
+    // Applications API
+    //-----------------------------------------------------------
 
     async getApplications(params = {}) {
         await this.simulateDelay();
@@ -149,15 +165,9 @@ export class MockApiClient {
         };
     }
 
-    async updateApplication(id, data) {
-        await this.simulateDelay();
-        await this.simulateError();
-        return {
-            id: id,
-            ...data,
-            updated_at: new Date().toISOString(),
-        };
-    }
+    //-----------------------------------------------------------
+    // Transactions API
+    //-----------------------------------------------------------
 
     async getTransactions(params = {}) {
         await this.simulateDelay();
@@ -203,6 +213,10 @@ export class MockApiClient {
         };
     }
 
+    //-----------------------------------------------------------
+    // Document Verification API
+    //-----------------------------------------------------------
+
     async getVerifications(params = {}) {
         await this.simulateDelay();
         await this.simulateError();
@@ -229,6 +243,7 @@ export class MockApiClient {
             limit: params.limit || 20,
         };
     }
+
     async approveVerification(id) {
         await this.simulateDelay();
         await this.simulateError();
@@ -246,7 +261,11 @@ export class MockApiClient {
             message: "Verification rejected successfully",
         };
     }
+
+    //-----------------------------------------------------------
     // Chat Management API
+    //-----------------------------------------------------------
+
     async getChats(params = {}) {
         await this.simulateDelay();
         await this.simulateError();
@@ -277,7 +296,11 @@ export class MockApiClient {
             limit: params.limit || 20,
         };
     }
+
+    //-----------------------------------------------------------
     // Reviews API
+    //-----------------------------------------------------------
+
     async getReviews(params = {}) {
         await this.simulateDelay();
         await this.simulateError();
@@ -308,6 +331,7 @@ export class MockApiClient {
             limit: params.limit || 20,
         };
     }
+
     async moderateReview(id, action) {
         await this.simulateDelay();
         await this.simulateError();
@@ -317,13 +341,20 @@ export class MockApiClient {
         };
     }
 
+    //-----------------------------------------------------------
     // Dashboard Stats
+    //-----------------------------------------------------------
+
     async getDashboardStats() {
         await this.simulateDelay();
         await this.simulateError();
         return mockDataManager.getDashboardStats();
     }
+
+    //-----------------------------------------------------------
     // Bulk operations
+    //-----------------------------------------------------------
+
     async bulkUpdateUsers(ids, updateData) {
         await this.simulateDelay();
         await this.simulateError();
@@ -333,6 +364,7 @@ export class MockApiClient {
             message: `Successfully updated ${ids.length} users`,
         };
     }
+
     async bulkDeleteUsers(ids) {
         await this.simulateDelay();
         await this.simulateError();
@@ -342,7 +374,11 @@ export class MockApiClient {
             message: `Successfully deleted ${ids.length} users`,
         };
     }
+
+    //-----------------------------------------------------------
     // User wallet operations
+    //-----------------------------------------------------------
+
     async adjustUserWallet(userId, amount, reason) {
         await this.simulateDelay();
         await this.simulateError();
@@ -351,6 +387,173 @@ export class MockApiClient {
             new_balance: Math.max(0, amount), // Simplified for mock
             transaction_id: Date.now().toString(),
             message: `Wallet ${amount > 0 ? "credited" : "debited"} successfully`,
+        };
+    }
+
+    //-----------------------------------------------------------
+    // Dispute Management API
+    //-----------------------------------------------------------
+
+    async getDisputes(params = {}) {
+        await this.simulateDelay();
+        await this.simulateError();
+        const mockDisputes = Array.from({ length: 25 }, (_, index) => ({
+            id: `dispute_${index + 1}`,
+            plan_id: `plan_${Math.floor(Math.random() * 20) + 1}`,
+            complainant_id: `user_${Math.floor(Math.random() * 50) + 1}`,
+            respondent_id: `user_${Math.floor(Math.random() * 50) + 1}`,
+            dispute_type: [
+                "plan_not_happened",
+                "host_issues",
+                "joiner_issues",
+                "payment_problems",
+            ][Math.floor(Math.random() * 4)],
+            status: ["open", "investigating", "resolved", "closed"][
+                Math.floor(Math.random() * 4)
+            ],
+            disputed_amount: Math.floor(Math.random() * 3000) + 500,
+            description:
+                "The plan did not happen as described and I want a refund.",
+            resolution_notes:
+                Math.random() > 0.5 ? "Resolved with partial refund" : null,
+            resolution_action: Math.random() > 0.5 ? "partial_refund" : null,
+            created_at: new Date(
+                Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000
+            ).toISOString(),
+            resolved_at: Math.random() > 0.6 ? new Date().toISOString() : null,
+        }));
+        return {
+            data: mockDisputes,
+            total: mockDisputes.length,
+            page: params.page || 1,
+            limit: params.limit || 20,
+        };
+    }
+
+    async resolveDispute(id, resolution) {
+        await this.simulateDelay();
+        await this.simulateError();
+        return {
+            success: true,
+            message: "Dispute resolved successfully",
+        };
+    }
+
+    //-----------------------------------------------------------
+    // Subscription Management API
+    //-----------------------------------------------------------
+
+    async getSubscriptions(params = {}) {
+        await this.simulateDelay();
+        await this.simulateError();
+        const mockSubscriptions = Array.from({ length: 50 }, (_, index) => ({
+            id: `sub_${index + 1}`,
+            user_id: `user_${index + 1}`,
+            user_level: [1, 1, 2, 2, 3][Math.floor(Math.random() * 5)],
+            current_plan: ["Plan_1", "Plan_1", "Plan_2", "Plan_3"][
+                Math.floor(Math.random() * 4)
+            ],
+            status: ["active", "expired", "cancelled"][
+                Math.floor(Math.random() * 3)
+            ],
+            monthly_cost: [0, 999, 2999][Math.floor(Math.random() * 3)],
+            subscription_start: new Date(
+                Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000
+            ).toISOString,
+            next_billing: new Date(
+                Date.now() + Math.random() * 30 * 24 * 60 * 60 * 1000
+            ).toISOString(),
+            auto_renew: Math.random() > 0.3,
+            plans_this_month: Math.floor(Math.random() * 20),
+            bp_spent_this_month: Math.floor(Math.random() * 10000),
+        }));
+        return {
+            data: mockSubscriptions,
+            total: mockSubscriptions.length,
+            page: params.page || 1,
+            limit: params.limit || 20,
+        };
+    }
+
+    async upgradeSubscription(userId, newPlan) {
+        await this.simulateDelay();
+        await this.simulateError();
+        return {
+            success: true,
+            message: "Subscription upgraded successfully",
+        };
+    }
+
+    //-----------------------------------------------------------
+    // Configuration Management API
+    //-----------------------------------------------------------
+
+    async updatePlatformConfig(section, values) {
+        await this.simulateDelay();
+        await this.simulateError();
+        return {
+            success: true,
+            message: "Configuration updated successfully",
+        };
+    }
+
+    async resetPlatformConfig() {
+        await this.simulateDelay();
+        await this.simulateError();
+        return {
+            success: true,
+            message: "Platform configuration reset to defaults",
+        };
+    }
+
+    //-----------------------------------------------------------
+    // Advanced Analytics API
+    //-----------------------------------------------------------
+
+    async getAnalyticsData(params = {}) {
+        await this.simulateDelay();
+        await this.simulateError();
+        return {
+            user_growth: Array.from({ length: 12 }, (_, i) => ({
+                month: new Date(2024, i, 1).toLocaleString("default", {
+                    month: "short",
+                }),
+                users: Math.floor(Math.random() * 500) + 100,
+                plans: Math.floor(Math.random() * 200) + 50,
+            })),
+            revenue_data: Array.from({ length: 12 }, (_, i) => ({
+                month: new Date(2024, i, 1).toLocaleString("default", {
+                    month: "short",
+                }),
+                revenue: Math.random() * 5000 + 1000,
+                transactions: Math.floor(Math.random() * 1000) + 200,
+            })),
+            plan_distribution: [
+                { name: "Host Pays", value: 35, color: "#722ed1" },
+                { name: "Joiners Pay", value: 45, color: "#1890ff" },
+                { name: "Bidding", value: 20, color: "#fa8c16" },
+            ],
+        };
+    }
+
+    //-----------------------------------------------------------
+    // Export functionality
+    //-----------------------------------------------------------
+
+    async exportData(type, format) {
+        await this.simulateDelay();
+        await this.simulateError();
+        // Simulate file download
+        const blob = new Blob(["Mock data export"], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `blume_${type}_export.${format}`;
+        a.click();
+        URL.revokeObjectURL(url);
+        return {
+            success: true,
+            message: `${type} data exported as ${format.toUpperCase()}`,
         };
     }
 }
