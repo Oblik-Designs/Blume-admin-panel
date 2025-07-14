@@ -2,7 +2,7 @@ import React from "react";
 import { Space, Typography, Tooltip } from "antd";
 import { TrophyOutlined } from "@ant-design/icons";
 const { Text } = Typography;
-const BlumePointsDisplay = ({
+const BeensPointsDisplay = ({
     amount,
     showUSD = true,
     size = "default",
@@ -51,7 +51,7 @@ const BlumePointsDisplay = ({
                 {formatAmount(amount)} BP{suffix}
             </Text>
             {showUSD && amount > 0 && (
-                <Tooltip title={`${amount?.toLocaleString()} BlumePoints`}>
+                <Tooltip title={`${amount?.toLocaleString()} BeensPoints`}>
                     <Text
                         type="secondary"
                         style={{
@@ -65,4 +65,4 @@ const BlumePointsDisplay = ({
         </Space>
     );
 };
-export default BlumePointsDisplay;
+export default BeensPointsDisplay;

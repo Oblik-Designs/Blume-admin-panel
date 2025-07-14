@@ -63,8 +63,8 @@ export const generateUser = (index = 0) => {
         profile_level: level,
         profile_points: bpSpent + faker.number.int({ min: 0, max: 5000 }),
         wallet: {
-            blume_points: faker.number.int({ min: 0, max: 25000 }),
-            escrow_blume_points: faker.number.int({ min: 0, max: 5000 }),
+            beens_points: faker.number.int({ min: 0, max: 25000 }),
+            escrow_beens_points: faker.number.int({ min: 0, max: 5000 }),
         },
         current_subscription: subscription,
         subscription_expires_at:

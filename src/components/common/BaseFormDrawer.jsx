@@ -21,7 +21,7 @@ import {
 import dayjs from "dayjs";
 import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
 import { useAPI } from "../../hooks/useAPI";
-import BlumePointsDisplay from "./BlumePointsDisplay";
+import BeensPointsDisplay from "./BeensPointsDisplay";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -119,7 +119,7 @@ const BaseFormDrawer = ({
                         parser={field.parser}
                     />
                 );
-            case "blumepoints":
+            case "beenspoints":
                 return (
                     <InputNumber
                         {...commonProps}

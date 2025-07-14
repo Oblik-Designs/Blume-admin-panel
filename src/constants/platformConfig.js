@@ -1,6 +1,6 @@
 export const PLATFORM_CONFIG = {
     // Financial Settings
-    BLUME_POINTS: {
+    BEENS_POINTS: {
         USD_CONVERSION_RATE: 1000,
         SERVICE_FEE_PERCENT: 10,
         MIN_PURCHASE_AMOUNT: 100,

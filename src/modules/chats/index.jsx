@@ -11,7 +11,7 @@ import {
 import BaseTable from "../../components/common/BaseTable";
 import BaseViewDrawer from "../../components/common/BaseViewDrawer";
 import StatusBadge from "../../components/common/StatusBadge";
-import BlumePointsDisplay from "../../components/common/BlumePointsDisplay";
+import BeensPointsDisplay from "../../components/common/BeensPointsDisplay";
 import { useAPI } from "../../hooks/useAPI";
 import { api } from "../../api";
 const { Text } = Typography;
@@ -119,7 +119,7 @@ const Chats = () => {
                                 {record.gift_transactions} gifts
                             </div>
                             {record.total_gifts_bp > 0 && (
-                                <BlumePointsDisplay
+                                <BeensPointsDisplay
                                     amount={record.total_gifts_bp}
                                     size="small"
                                     showUSD={false}
@@ -215,7 +215,7 @@ const Chats = () => {
                     {
                         key: "total_gifts_bp",
                         label: "Total Gifts Value",
-                        type: "blumepoints",
+                        type: "beenspoints",
                     },
                     { key: "created_at", label: "Created", type: "datetime" },
                     {

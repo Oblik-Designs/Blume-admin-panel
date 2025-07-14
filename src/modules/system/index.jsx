@@ -83,7 +83,7 @@ const System = () => {
         {
             id: "1",
             name: "John Admin",
-            email: "john@blume.com",
+            email: "john@beens.com",
             role: "super_admin",
             status: "active",
             last_login: new Date().toISOString(),
@@ -91,7 +91,7 @@ const System = () => {
         {
             id: "2",
             name: "Jane Support",
-            email: "jane@blume.com",
+            email: "jane@beens.com",
             role: "support_admin",
             status: "active",
             last_login: new Date(
@@ -169,15 +169,15 @@ const System = () => {
                             <Card title="Financial Settings" size="small">
                                 <Form
                                     layout="vertical"
-                                    initialValues={config.BLUME_POINTS}
+                                    initialValues={config.BEENS_POINTS}
                                     onFinish={(values) =>
-                                        handleConfigSave("BLUME_POINTS", values)
+                                        handleConfigSave("BEENS_POINTS", values)
                                     }
                                 >
                                     <Form.Item
                                         name="USD_CONVERSION_RATE"
                                         label="BP to USD Rate"
-                                        help="How many BlumePoints equal $1 USD"
+                                        help="How many BeensPoints equal $1 USD"
                                     >
                                         <InputNumber
                                             min={1}
@@ -435,7 +435,7 @@ const System = () => {
                                     >
                                         <TextArea
                                             rows={3}
-                                            placeholder="https://admin.blume.com"
+                                            placeholder="https://admin.beens.com"
                                         />
                                     </Form.Item>
                                     <Form.Item>

@@ -23,7 +23,7 @@ import {
     EyeOutlined,
     PlusOutlined,
 } from "@ant-design/icons";
-import BlumePointsDisplay from "../../components/common/BlumePointsDisplay";
+import BeensPointsDisplay from "../../components/common/BeensPointsDisplay";
 import StatusBadge from "../../components/common/StatusBadge";
 import { useAPI } from "../../hooks/useAPI";
 import { api } from "../../api";
@@ -152,7 +152,7 @@ const Financial = () => {
             key: "amount",
             width: 120,
             render: (amount) => (
-                <BlumePointsDisplay amount={amount} size="small" />
+                <BeensPointsDisplay amount={amount} size="small" />
             ),
             sorter: true,
         },
@@ -169,7 +169,7 @@ const Financial = () => {
             key: "net_amount",
             width: 120,
             render: (amount) => (
-                <BlumePointsDisplay
+                <BeensPointsDisplay
                     amount={amount}
                     size="small"
                     showUSD={false}
@@ -211,7 +211,7 @@ const Financial = () => {
             <div style={{ marginBottom: 24 }}>
                 <Title level={2}>Financial Management</Title>
                 <Text type="secondary">
-                    Monitor BlumePoints transactions, revenue, and wallet
+                    Monitor BeensPoints transactions, revenue, and wallet
                     adjustments
                 </Text>
             </div>
@@ -244,7 +244,7 @@ const Financial = () => {
                             suffix="K"
                             valueStyle={{ color: "#722ed1" }}
                         />
-                        <BlumePointsDisplay
+                        <BeensPointsDisplay
                             amount={stats.totalBP}
                             showIcon={false}
                             size="small"

@@ -1,0 +1,264 @@
+/* src/components/auth/LoginPage.css */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px;
+    background: linear-gradient(135deg, #722ed1 0%, #eb2f96 100%);
+}
+
+.login-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23722ed1" stop-opacity="0.1"/><stop offset="100%" stop-color="%23eb2f96" stop-opacity="0.05"/></radialGradient></defs><rect width="100%" height="100%" fill="url(%23a)"/><g fill="none" stroke="%23ffffff" stroke-width="1" stroke-opacity="0.1"><circle cx="200" cy="200" r="100"/><circle cx="800" cy="300" r="150"/><circle cx="400" cy="700" r="80"/><circle cx="700" cy="800" r="120"/></g></svg>')
+        center/cover;
+}
+
+.login-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.login-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 20px;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.blume-logo-large {
+    margin-bottom: 24px;
+}
+
+.blume-logo-large .anticon {
+    background: linear-gradient(45deg, #722ed1, #eb2f96);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #722ed1;
+    filter: drop-shadow(0 4px 8px rgba(114, 46, 209, 0.2));
+}
+
+.login-title {
+    margin-bottom: 12px !important;
+    background: linear-gradient(45deg, #722ed1, #eb2f96);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #722ed1;
+    font-weight: 700;
+}
+
+.login-subtitle {
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.login-button {
+    height: 56px;
+    font-weight: 600;
+    background: linear-gradient(45deg, #722ed1, #eb2f96);
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.login-button:hover {
+    background: linear-gradient(45deg, #531dab, #c41d7f);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(114, 46, 209, 0.4);
+}
+
+.quick-login-section {
+    margin-top: 20px;
+}
+
+.quick-login-section .ant-btn {
+    height: auto;
+    padding: 16px 20px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border-width: 2px;
+}
+
+.quick-login-section .ant-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* Form field customizations */
+.login-card .ant-form-item-label > label {
+    font-weight: 600;
+    color: #262626;
+    font-size: 14px;
+}
+
+.login-card .ant-input {
+    border-radius: 10px;
+    border: 2px solid #e8e8e8;
+    transition: all 0.3s ease;
+    padding: 12px 16px;
+    font-size: 14px;
+}
+
+.login-card .ant-input:focus,
+.login-card .ant-input-focused {
+    border-color: #722ed1;
+    box-shadow: 0 0 0 3px rgba(114, 46, 209, 0.1);
+}
+
+.login-card .ant-select-selector {
+    border-radius: 10px !important;
+    border: 2px solid #e8e8e8 !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+}
+
+.login-card .ant-select-focused .ant-select-selector {
+    border-color: #722ed1 !important;
+    box-shadow: 0 0 0 3px rgba(114, 46, 209, 0.1) !important;
+}
+
+/* Alert customizations */
+.login-card .ant-alert {
+    border-radius: 8px;
+}
+
+.login-card .ant-alert-error {
+    background-color: #fff2f0;
+    border: 1px solid #ffccc7;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 16px;
+    }
+
+    .login-card {
+        max-width: 100%;
+        padding: 24px;
+        margin: 16px;
+        border-radius: 16px;
+    }
+
+    .login-header {
+        margin-bottom: 32px;
+    }
+
+    .blume-logo-large .anticon {
+        font-size: 48px;
+    }
+
+    .login-title {
+        font-size: 24px !important;
+    }
+
+    .login-subtitle {
+        font-size: 14px;
+    }
+
+    .quick-login-section .ant-btn {
+        padding: 12px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 20px;
+        margin: 12px;
+    }
+
+    .login-header {
+        margin-bottom: 24px;
+    }
+
+    .blume-logo-large .anticon {
+        font-size: 40px;
+    }
+
+    .login-title {
+        font-size: 20px !important;
+    }
+
+    .login-subtitle {
+        font-size: 13px;
+    }
+
+    .quick-login-section .ant-btn {
+        padding: 10px 14px;
+    }
+
+    .login-footer {
+        margin-top: 24px;
+        padding-top: 20px;
+    }
+}
+
+/* Loading state */
+.login-card .ant-btn-loading {
+    pointer-events: none;
+}
+
+.login-card .ant-btn-loading .anticon {
+    margin-right: 8px;
+}
+
+/* Success state animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.login-features {
+    animation: fadeInUp 0.8s ease-out;
+}

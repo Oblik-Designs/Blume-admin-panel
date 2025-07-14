@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu } from "antd";
+import { Image, Layout, Menu } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
     DashboardOutlined,
@@ -95,7 +95,9 @@ const Sidebar = ({ collapsed }) => {
                     fontSize: collapsed ? "18px" : "16px",
                 }}
             >
-                {collapsed ? "B" : "Blume Admin"}
+                {/* <Image src="/beens-logo.png" width={30} /> */}
+
+                {collapsed ? "B" : "Beens Admin Panel"}
             </div>
             <Menu
                 theme="dark"

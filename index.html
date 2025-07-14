@@ -1,0 +1,1833 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MultiTool - Complete Android Utility App Demo</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                padding: 20px;
+            }
+
+            .phone-container {
+                width: 360px;
+                height: 640px;
+                background: #000;
+                border-radius: 25px;
+                padding: 8px;
+                position: relative;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            .screen {
+                width: 100%;
+                height: 100%;
+                background: #fff;
+                border-radius: 20px;
+                overflow: hidden;
+                position: relative;
+                display: none;
+            }
+
+            .screen.active {
+                display: block;
+            }
+
+            .status-bar {
+                height: 24px;
+                background: #fff;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 16px;
+                font-size: 12px;
+                color: #333;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .header {
+                height: 56px;
+                background: #2196f3;
+                color: white;
+                display: flex;
+                align-items: center;
+                padding: 0 16px;
+                position: relative;
+            }
+
+            .header h1 {
+                font-size: 18px;
+                font-weight: 500;
+                margin-left: 16px;
+            }
+
+            .back-btn {
+                width: 24px;
+                height: 24px;
+                cursor: pointer;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 18px;
+            }
+
+            .content {
+                flex: 1;
+                padding: 20px;
+                overflow-y: auto;
+                height: calc(100% - 80px);
+            }
+
+            .tool-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+                margin-top: 20px;
+            }
+
+            .tool-card {
+                background: white;
+                border-radius: 12px;
+                padding: 20px;
+                text-align: center;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+                transition:
+                    transform 0.2s,
+                    box-shadow 0.2s;
+                border: 1px solid #f0f0f0;
+            }
+
+            .tool-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            }
+
+            .tool-icon {
+                width: 48px;
+                height: 48px;
+                background: #e3f2fd;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 12px;
+                font-size: 24px;
+                color: #2196f3;
+            }
+
+            .tool-title {
+                font-size: 14px;
+                font-weight: 500;
+                color: #333;
+                margin-bottom: 4px;
+            }
+
+            .tool-subtitle {
+                font-size: 12px;
+                color: #666;
+                line-height: 1.4;
+            }
+
+            .input-group {
+                margin-bottom: 20px;
+            }
+
+            .input-label {
+                display: block;
+                margin-bottom: 8px;
+                font-size: 14px;
+                color: #333;
+                font-weight: 500;
+            }
+
+            .input-field {
+                width: 100%;
+                padding: 12px 16px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 14px;
+                background: #fff;
+                transition: border-color 0.2s;
+            }
+
+            .input-field:focus {
+                outline: none;
+                border-color: #2196f3;
+            }
+
+            .btn-primary {
+                width: 100%;
+                padding: 12px;
+                background: #2196f3;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+
+            .btn-primary:hover {
+                background: #1976d2;
+            }
+
+            .btn-secondary {
+                width: 100%;
+                padding: 12px;
+                background: #f5f5f5;
+                color: #333;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                margin-top: 8px;
+                transition: background 0.2s;
+            }
+
+            .btn-secondary:hover {
+                background: #e0e0e0;
+            }
+
+            .feature-list {
+                background: #f9f9f9;
+                border-radius: 8px;
+                padding: 16px;
+                margin-top: 20px;
+            }
+
+            .feature-item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+                font-size: 14px;
+                color: #333;
+            }
+
+            .feature-item:last-child {
+                margin-bottom: 0;
+            }
+
+            .feature-icon {
+                width: 20px;
+                height: 20px;
+                background: #4caf50;
+                border-radius: 50%;
+                margin-right: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                color: white;
+            }
+
+            .download-options {
+                display: grid;
+                gap: 12px;
+                margin-top: 20px;
+            }
+
+            .download-option {
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 16px;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .download-option:hover {
+                border-color: #2196f3;
+                background: #f9f9f9;
+            }
+
+            .download-option.selected {
+                border-color: #2196f3;
+                background: #f0f8ff;
+            }
+
+            .option-title {
+                font-size: 14px;
+                font-weight: 500;
+                color: #333;
+                margin-bottom: 4px;
+            }
+
+            .option-subtitle {
+                font-size: 12px;
+                color: #666;
+            }
+
+            .progress-container {
+                background: #f9f9f9;
+                border-radius: 8px;
+                padding: 20px;
+                margin: 20px 0;
+                text-align: center;
+            }
+
+            .progress-bar {
+                width: 100%;
+                height: 8px;
+                background: #f0f0f0;
+                border-radius: 4px;
+                overflow: hidden;
+                margin: 20px 0;
+            }
+
+            .progress-fill {
+                height: 100%;
+                background: linear-gradient(90deg, #2196f3, #21cbf3);
+                width: 0%;
+                transition: width 0.3s ease;
+                border-radius: 4px;
+            }
+
+            .progress-text {
+                font-size: 16px;
+                color: #333;
+                margin-bottom: 8px;
+            }
+
+            .progress-subtitle {
+                font-size: 12px;
+                color: #666;
+            }
+
+            .success-container {
+                text-align: center;
+                padding: 40px 20px;
+            }
+
+            .success-icon {
+                width: 80px;
+                height: 80px;
+                background: #4caf50;
+                border-radius: 50%;
+                margin: 0 auto 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 40px;
+                color: white;
+            }
+
+            .success-title {
+                font-size: 18px;
+                font-weight: 500;
+                color: #333;
+                margin-bottom: 8px;
+            }
+
+            .success-subtitle {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 30px;
+            }
+
+            .media-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+                margin-top: 20px;
+            }
+
+            .media-item {
+                aspect-ratio: 1;
+                background: #f0f0f0;
+                border-radius: 8px;
+                position: relative;
+                cursor: pointer;
+                overflow: hidden;
+                transition: transform 0.2s;
+            }
+
+            .media-item:hover {
+                transform: scale(1.05);
+            }
+
+            .media-item.selected {
+                border: 2px solid #2196f3;
+            }
+
+            .media-item.selected::after {
+                content: "✓";
+                position: absolute;
+                top: 4px;
+                right: 4px;
+                width: 20px;
+                height: 20px;
+                background: #2196f3;
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+            }
+
+            .media-placeholder {
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+                color: white;
+            }
+
+            .temp-email-display {
+                background: #f0f8ff;
+                border: 1px solid #2196f3;
+                border-radius: 8px;
+                padding: 16px;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            .email-address {
+                font-size: 16px;
+                font-weight: 500;
+                color: #2196f3;
+                margin-bottom: 8px;
+                word-break: break-all;
+            }
+
+            .email-info {
+                font-size: 12px;
+                color: #666;
+            }
+
+            .email-list {
+                background: #f9f9f9;
+                border-radius: 8px;
+                margin-top: 20px;
+            }
+
+            .email-item {
+                padding: 16px;
+                border-bottom: 1px solid #eee;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+
+            .email-item:hover {
+                background: #f0f0f0;
+            }
+
+            .email-item:last-child {
+                border-bottom: none;
+            }
+
+            .email-sender {
+                font-size: 14px;
+                font-weight: 500;
+                color: #333;
+                margin-bottom: 4px;
+            }
+
+            .email-subject {
+                font-size: 13px;
+                color: #666;
+                margin-bottom: 4px;
+            }
+
+            .email-time {
+                font-size: 12px;
+                color: #999;
+            }
+
+            .email-detail {
+                padding: 20px;
+            }
+
+            .email-header {
+                border-bottom: 1px solid #eee;
+                padding-bottom: 16px;
+                margin-bottom: 16px;
+            }
+
+            .email-body {
+                font-size: 14px;
+                line-height: 1.5;
+                color: #333;
+            }
+
+            .nav-buttons {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 4px;
+                z-index: 1000;
+                background: rgba(0, 0, 0, 0.8);
+                padding: 8px;
+                border-radius: 20px;
+            }
+
+            .nav-btn {
+                padding: 6px 12px;
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+                border: none;
+                border-radius: 16px;
+                font-size: 10px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+
+            .nav-btn:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+            .nav-btn.active {
+                background: #2196f3;
+            }
+
+            .screen-indicator {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: rgba(0, 0, 0, 0.6);
+                color: white;
+                padding: 4px 8px;
+                border-radius: 12px;
+                font-size: 10px;
+                z-index: 100;
+            }
+
+            .floating-actions {
+                position: fixed;
+                bottom: 100px;
+                right: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .fab {
+                width: 56px;
+                height: 56px;
+                background: #ff5722;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                font-size: 24px;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                transition: all 0.2s;
+            }
+
+            .fab:hover {
+                transform: scale(1.1);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            }
+
+            .confirmation-dialog {
+                background: white;
+                border-radius: 12px;
+                padding: 24px;
+                margin: 20px;
+                text-align: center;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            }
+
+            .confirmation-icon {
+                width: 60px;
+                height: 60px;
+                background: #ff9800;
+                border-radius: 50%;
+                margin: 0 auto 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 30px;
+                color: white;
+            }
+
+            .confirmation-title {
+                font-size: 16px;
+                font-weight: 500;
+                color: #333;
+                margin-bottom: 8px;
+            }
+
+            .confirmation-text {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 24px;
+            }
+
+            .dialog-buttons {
+                display: flex;
+                gap: 12px;
+            }
+
+            .dialog-btn {
+                flex: 1;
+                padding: 12px;
+                border: none;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+
+            .dialog-btn-cancel {
+                background: #f5f5f5;
+                color: #333;
+            }
+
+            .dialog-btn-confirm {
+                background: #2196f3;
+                color: white;
+            }
+
+            .empty-state {
+                text-align: center;
+                padding: 40px 20px;
+                color: #666;
+            }
+
+            .empty-icon {
+                font-size: 48px;
+                margin-bottom: 16px;
+            }
+
+            .empty-title {
+                font-size: 16px;
+                font-weight: 500;
+                margin-bottom: 8px;
+            }
+
+            .empty-subtitle {
+                font-size: 14px;
+                line-height: 1.4;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="phone-container">
+            <!-- Screen Indicator -->
+            <div class="screen-indicator" id="screenIndicator">1/18</div>
+
+            <!-- 1. Main Dashboard -->
+            <div class="screen active" id="home">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <h1>MultiTool</h1>
+                </div>
+                <div class="content">
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">5</div>
+                            <span>Essential tools in one app</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <span>Fast and lightweight</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🔒</div>
+                            <span>Privacy focused</span>
+                        </div>
+                    </div>
+
+                    <div class="tool-grid">
+                        <div
+                            class="tool-card"
+                            onclick="showScreen('instagram-input')"
+                        >
+                            <div class="tool-icon">📱</div>
+                            <div class="tool-title">Social Downloader</div>
+                            <div class="tool-subtitle">
+                                Instagram & Facebook content
+                            </div>
+                        </div>
+
+                        <div
+                            class="tool-card"
+                            onclick="showScreen('whatsapp-status')"
+                        >
+                            <div class="tool-icon">📸</div>
+                            <div class="tool-title">Status Saver</div>
+                            <div class="tool-subtitle">
+                                WhatsApp status backup
+                            </div>
+                        </div>
+
+                        <div
+                            class="tool-card"
+                            onclick="showScreen('direct-message')"
+                        >
+                            <div class="tool-icon">💬</div>
+                            <div class="tool-title">Direct Message</div>
+                            <div class="tool-subtitle">
+                                WhatsApp without saving
+                            </div>
+                        </div>
+
+                        <div
+                            class="tool-card"
+                            onclick="showScreen('temp-email')"
+                        >
+                            <div class="tool-icon">📧</div>
+                            <div class="tool-title">Temp Email</div>
+                            <div class="tool-subtitle">
+                                Disposable email address
+                            </div>
+                        </div>
+
+                        <div
+                            class="tool-card"
+                            onclick="showScreen('video-selector')"
+                        >
+                            <div class="tool-icon">🎥</div>
+                            <div class="tool-title">Video Compressor</div>
+                            <div class="tool-subtitle">
+                                Reduce video file size
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Instagram & Facebook Downloader - Input URL -->
+            <div class="screen" id="instagram-input">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button class="back-btn" onclick="showScreen('home')">
+                        ←
+                    </button>
+                    <h1>Social Downloader</h1>
+                </div>
+                <div class="content">
+                    <div class="input-group">
+                        <label class="input-label">Post URL</label>
+                        <input
+                            type="text"
+                            class="input-field"
+                            placeholder="Paste Instagram or Facebook URL here..."
+                        />
+                    </div>
+
+                    <button
+                        class="btn-primary"
+                        onclick="showScreen('instagram-options')"
+                    >
+                        Analyze URL
+                    </button>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <span>Supports photos, videos, and stories</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <span>No watermarks added</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <span>Fast processing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Instagram & Facebook Downloader - Download Options -->
+            <div class="screen" id="instagram-options">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button
+                        class="back-btn"
+                        onclick="showScreen('instagram-input')"
+                    >
+                        ←
+                    </button>
+                    <h1>Download Options</h1>
+                </div>
+                <div class="content">
+                    <div class="download-options">
+                        <div class="download-option selected">
+                            <div class="option-title">High Quality Video</div>
+                            <div class="option-subtitle">1080p • 45.2 MB</div>
+                        </div>
+                        <div class="download-option">
+                            <div class="option-title">
+                                Standard Quality Video
+                            </div>
+                            <div class="option-subtitle">720p • 23.1 MB</div>
+                        </div>
+                        <div class="download-option">
+                            <div class="option-title">Thumbnail Image</div>
+                            <div class="option-subtitle">JPG • 1.2 MB</div>
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn-primary"
+                        onclick="showScreen('instagram-progress')"
+                    >
+                        Download Selected
+                    </button>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">📱</div>
+                            <span>Direct download to gallery</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <span>Resume interrupted downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Instagram & Facebook Downloader - Progress -->
+            <div class="screen" id="instagram-progress">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button
+                        class="back-btn"
+                        onclick="showScreen('instagram-options')"
+                    >
+                        ←
+                    </button>
+                    <h1>Downloading</h1>
+                </div>
+                <div class="content">
+                    <div class="progress-container">
+                        <div class="progress-text">Downloading video...</div>
+                        <div class="progress-bar">
+                            <div
+                                class="progress-fill"
+                                id="downloadProgress"
+                                style="width: 65%"
+                            ></div>
+                        </div>
+                        <div class="progress-subtitle">
+                            65% • 29.4 MB of 45.2 MB
+                        </div>
+                    </div>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">📱</div>
+                            <span>Downloading to: /Downloads/MultiTool/</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⏱️</div>
+                            <span>Time remaining: ~15 seconds</span>
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn-secondary"
+                        onclick="showScreen('instagram-success')"
+                    >
+                        Simulate Complete
+                    </button>
+                </div>
+            </div>
+
+            <!-- 5. Instagram & Facebook Downloader - Success -->
+            <div class="screen" id="instagram-success">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button class="back-btn" onclick="showScreen('home')">
+                        ←
+                    </button>
+                    <h1>Download Complete</h1>
+                </div>
+                <div class="content">
+                    <div class="success-container">
+                        <div class="success-icon">✓</div>
+                        <div class="success-title">Download Successful!</div>
+                        <div class="success-subtitle">
+                            Video saved to your gallery
+                        </div>
+
+                        <button
+                            class="btn-primary"
+                            onclick="showScreen('home')"
+                        >
+                            Back to Home
+                        </button>
+                        <button
+                            class="btn-secondary"
+                            onclick="showScreen('instagram-input')"
+                        >
+                            Download Another
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. WhatsApp Status Saver - Main -->
+            <div class="screen" id="whatsapp-status">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button class="back-btn" onclick="showScreen('home')">
+                        ←
+                    </button>
+                    <h1>Status Saver</h1>
+                </div>
+                <div class="content">
+                    <div class="input-group">
+                        <label class="input-label">Status Files Location</label>
+                        <button
+                            class="btn-secondary"
+                            onclick="showScreen('status-browser')"
+                        >
+                            Browse Status Files
+                        </button>
+                        <div
+                            style="
+                                font-size: 12px;
+                                color: #666;
+                                margin-top: 8px;
+                            "
+                        >
+                            /Android/media/com.whatsapp/WhatsApp/Media/.Statuses
+                        </div>
+                    </div>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">📱</div>
+                            <span>Browse all status files</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">💾</div>
+                            <span>Save to your gallery</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🔄</div>
+                            <span>Auto-refresh for new statuses</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. WhatsApp Status Saver - Browser -->
+            <div class="screen" id="status-browser">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button
+                        class="back-btn"
+                        onclick="showScreen('whatsapp-status')"
+                    >
+                        ←
+                    </button>
+                    <h1>Status Files (12)</h1>
+                </div>
+                <div class="content">
+                    <div class="media-grid">
+                        <div class="media-item" onclick="toggleSelection(this)">
+                            <div class="media-placeholder">📷</div>
+                        </div>
+                        <div class="media-item" onclick="toggleSelection(this)">
+                            <div class="media-placeholder">🎥</div>
+                        </div>
+                        <div class="media-item" onclick="toggleSelection(this)">
+                            <div class="media-placeholder">📷</div>
+                        </div>
+                        <div class="media-item" onclick="toggleSelection(this)">
+                            <div class="media-placeholder">🎥</div>
+                        </div>
+                        <div class="media-item" onclick="toggleSelection(this)">
+                            <div class="media-placeholder">📷</div>
+                        </div>
+                        <div class="media-item" onclick="toggleSelection(this)">
+                            <div class="media-placeholder">📷</div>
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn-primary"
+                        onclick="showScreen('status-selection')"
+                        style="margin-top: 20px"
+                    >
+                        Save Selected (0)
+                    </button>
+                </div>
+            </div>
+
+            <!-- 8. WhatsApp Status Saver - Selection -->
+            <div class="screen" id="status-selection">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button
+                        class="back-btn"
+                        onclick="showScreen('status-browser')"
+                    >
+                        ←
+                    </button>
+                    <h1>Save Confirmation</h1>
+                </div>
+                <div class="content">
+                    <div class="confirmation-dialog">
+                        <div class="confirmation-icon">💾</div>
+                        <div class="confirmation-title">
+                            Save 3 Status Files?
+                        </div>
+                        <div class="confirmation-text">
+                            Selected files will be saved to your gallery and can
+                            be shared or viewed anytime.
+                        </div>
+
+                        <div class="dialog-buttons">
+                            <button
+                                class="dialog-btn dialog-btn-cancel"
+                                onclick="showScreen('status-browser')"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                class="dialog-btn dialog-btn-confirm"
+                                onclick="showScreen('whatsapp-status')"
+                            >
+                                Save Files
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">📱</div>
+                            <span>Saved to: /Gallery/StatusSaver/</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🔒</div>
+                            <span>Original quality preserved</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Direct WhatsApp Message - Input -->
+            <div class="screen" id="direct-message">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button class="back-btn" onclick="showScreen('home')">
+                        ←
+                    </button>
+                    <h1>Direct Message</h1>
+                </div>
+                <div class="content">
+                    <div class="input-group">
+                        <label class="input-label">Phone Number</label>
+                        <input
+                            type="tel"
+                            class="input-field"
+                            placeholder="Enter phone number with country code"
+                            value="+1234567890"
+                        />
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Message (Optional)</label>
+                        <textarea
+                            class="input-field"
+                            rows="4"
+                            placeholder="Type your message here..."
+                        >
+Hello! I found your number and wanted to connect.</textarea
+                        >
+                    </div>
+
+                    <button
+                        class="btn-primary"
+                        onclick="showScreen('message-confirmation')"
+                    >
+                        Open WhatsApp Chat
+                    </button>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">💬</div>
+                            <span>Message without saving contact</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🌍</div>
+                            <span>Works with international numbers</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <span>Instant WhatsApp opening</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Direct WhatsApp Message - Confirmation -->
+            <div class="screen" id="message-confirmation">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button
+                        class="back-btn"
+                        onclick="showScreen('direct-message')"
+                    >
+                        ←
+                    </button>
+                    <h1>Confirm Message</h1>
+                </div>
+                <div class="content">
+                    <div class="confirmation-dialog">
+                        <div class="confirmation-icon">💬</div>
+                        <div class="confirmation-title">Open WhatsApp?</div>
+                        <div class="confirmation-text">
+                            This will open WhatsApp with the message ready to
+                            send to +1234567890
+                        </div>
+
+                        <div class="dialog-buttons">
+                            <button
+                                class="dialog-btn dialog-btn-cancel"
+                                onclick="showScreen('direct-message')"
+                            >
+                                Edit
+                            </button>
+                            <button
+                                class="dialog-btn dialog-btn-confirm"
+                                onclick="showScreen('home')"
+                            >
+                                Open WhatsApp
+                            </button>
+                        </div>
+                    </div>
+
+                    <div
+                        style="
+                            background: #f0f8ff;
+                            padding: 16px;
+                            border-radius: 8px;
+                            margin-top: 20px;
+                        "
+                    >
+                        <div
+                            style="
+                                font-size: 14px;
+                                color: #333;
+                                margin-bottom: 8px;
+                            "
+                        >
+                            <strong>To:</strong> +1234567890
+                        </div>
+                        <div style="font-size: 14px; color: #333">
+                            <strong>Message:</strong> Hello! I found your number
+                            and wanted to connect.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. Temporary Email - Generator -->
+            <div class="screen" id="temp-email">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button class="back-btn" onclick="showScreen('home')">
+                        ←
+                    </button>
+                    <h1>Temporary Email</h1>
+                </div>
+                <div class="content">
+                    <div class="temp-email-display">
+                        <div class="email-address">
+                            temp.user.12345@mailtemp.com
+                        </div>
+                        <div class="email-info">
+                            Active for 8 minutes • Auto-refresh inbox
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="copyEmail()">
+                        Copy Email Address
+                    </button>
+                    <button
+                        class="btn-secondary"
+                        onclick="showScreen('temp-email-active')"
+                    >
+                        View Inbox
+                    </button>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">🔄</div>
+                            <span>Auto-refresh inbox</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⏰</div>
+                            <span>10-minute active duration</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🔒</div>
+                            <span>No registration required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12. Temporary Email - Active Display -->
+            <div class="screen" id="temp-email-active">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button class="back-btn" onclick="showScreen('temp-email')">
+                        ←
+                    </button>
+                    <h1>Active Email</h1>
+                </div>
+                <div class="content">
+                    <div class="temp-email-display">
+                        <div class="email-address">
+                            temp.user.12345@mailtemp.com
+                        </div>
+                        <div class="email-info">
+                            Active for 8 minutes • 2 new messages
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn-primary"
+                        onclick="showScreen('temp-email-inbox')"
+                    >
+                        View Inbox (2)
+                    </button>
+                    <button
+                        class="btn-secondary"
+                        onclick="showScreen('temp-email')"
+                    >
+                        Generate New Email
+                    </button>
+                </div>
+            </div>
+
+            <!-- 13. Temporary Email - Inbox -->
+            <div class="screen" id="temp-email-inbox">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button
+                        class="back-btn"
+                        onclick="showScreen('temp-email-active')"
+                    >
+                        ←
+                    </button>
+                    <h1>Inbox (2)</h1>
+                </div>
+                <div class="content">
+                    <div class="email-list">
+                        <div
+                            class="email-item"
+                            onclick="showScreen('temp-email-detail')"
+                        >
+                            <div class="email-sender">noreply@example.com</div>
+                            <div class="email-subject">
+                                Welcome! Please verify your email
+                            </div>
+                            <div class="email-time">2 minutes ago</div>
+                        </div>
+                        <div
+                            class="email-item"
+                            onclick="showScreen('temp-email-detail')"
+                        >
+                            <div class="email-sender">
+                                newsletter@company.com
+                            </div>
+                            <div class="email-subject">
+                                Your account has been created
+                            </div>
+                            <div class="email-time">5 minutes ago</div>
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn-secondary"
+                        onclick="showScreen('temp-email-active')"
+                        style="margin-top: 20px"
+                    >
+                        Refresh Inbox
+                    </button>
+                </div>
+            </div>
+
+            <!-- 14. Temporary Email - Detail -->
+            <div class="screen" id="temp-email-detail">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button
+                        class="back-btn"
+                        onclick="showScreen('temp-email-inbox')"
+                    >
+                        ←
+                    </button>
+                    <h1>Email Details</h1>
+                </div>
+                <div class="content">
+                    <div class="email-detail">
+                        <div class="email-header">
+                            <div
+                                style="
+                                    font-size: 16px;
+                                    font-weight: 500;
+                                    margin-bottom: 8px;
+                                "
+                            >
+                                Welcome! Please verify your email
+                            </div>
+                            <div
+                                style="
+                                    font-size: 14px;
+                                    color: #666;
+                                    margin-bottom: 4px;
+                                "
+                            >
+                                From: noreply@example.com
+                            </div>
+                            <div
+                                style="
+                                    font-size: 14px;
+                                    color: #666;
+                                    margin-bottom: 4px;
+                                "
+                            >
+                                To: temp.user.12345@mailtemp.com
+                            </div>
+                            <div style="font-size: 12px; color: #999">
+                                2 minutes ago
+                            </div>
+                        </div>
+
+                        <div class="email-body">
+                            <p>
+                                Thank you for signing up! Please click the link
+                                below to verify your email address:
+                            </p>
+                            <p style="margin: 16px 0">
+                                <a
+                                    href="#"
+                                    style="
+                                        color: #2196f3;
+                                        text-decoration: none;
+                                    "
+                                    >Verify Email Address</a
+                                >
+                            </p>
+                            <p>This link will expire in 24 hours.</p>
+                            <p>Best regards,<br />The Team</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 15. Video Compressor - File Selection -->
+            <div class="screen" id="video-selector">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button class="back-btn" onclick="showScreen('home')">
+                        ←
+                    </button>
+                    <h1>Video Compressor</h1>
+                </div>
+                <div class="content">
+                    <div class="input-group">
+                        <label class="input-label">Select Video File</label>
+                        <button
+                            class="btn-secondary"
+                            onclick="showScreen('video-settings')"
+                        >
+                            Choose Video from Gallery
+                        </button>
+                        <div
+                            style="
+                                font-size: 12px;
+                                color: #666;
+                                margin-top: 8px;
+                            "
+                        >
+                            Supports MP4, AVI, MOV, MKV, and more
+                        </div>
+                    </div>
+
+                    <div class="empty-state">
+                        <div class="empty-icon">🎥</div>
+                        <div class="empty-title">No video selected</div>
+                        <div class="empty-subtitle">
+                            Choose a video file to compress and reduce its size
+                            while maintaining quality.
+                        </div>
+                    </div>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">📱</div>
+                            <span>Reduce file size by up to 80%</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <span>Fast processing</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎥</div>
+                            <span>Maintains video quality</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 16. Video Compressor - Settings -->
+            <div class="screen" id="video-settings">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button
+                        class="back-btn"
+                        onclick="showScreen('video-selector')"
+                    >
+                        ←
+                    </button>
+                    <h1>Compression Settings</h1>
+                </div>
+                <div class="content">
+                    <div
+                        style="
+                            background: #f0f8ff;
+                            padding: 16px;
+                            border-radius: 8px;
+                            margin-bottom: 20px;
+                        "
+                    >
+                        <div
+                            style="
+                                font-size: 14px;
+                                color: #333;
+                                margin-bottom: 4px;
+                            "
+                        >
+                            <strong>Selected:</strong> summer_vacation.mp4
+                        </div>
+                        <div style="font-size: 12px; color: #666">
+                            Original size: 156.7 MB • Duration: 2:43
+                        </div>
+                    </div>
+
+                    <div class="download-options">
+                        <div class="download-option selected">
+                            <div class="option-title">High Compression</div>
+                            <div class="option-subtitle">
+                                ~31 MB • Fast processing • Good quality
+                            </div>
+                        </div>
+                        <div class="download-option">
+                            <div class="option-title">Medium Compression</div>
+                            <div class="option-subtitle">
+                                ~62 MB • Balanced size and quality
+                            </div>
+                        </div>
+                        <div class="download-option">
+                            <div class="option-title">Low Compression</div>
+                            <div class="option-subtitle">
+                                ~94 MB • Better quality • Larger file
+                            </div>
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn-primary"
+                        onclick="showScreen('video-progress')"
+                    >
+                        Start Compression
+                    </button>
+                </div>
+            </div>
+
+            <!-- 17. Video Compressor - Progress -->
+            <div class="screen" id="video-progress">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button
+                        class="back-btn"
+                        onclick="showScreen('video-settings')"
+                    >
+                        ←
+                    </button>
+                    <h1>Compressing Video</h1>
+                </div>
+                <div class="content">
+                    <div class="progress-container">
+                        <div class="progress-text">Compressing video...</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                        <div class="progress-subtitle">
+                            45% • Estimated time: 2 minutes
+                        </div>
+                    </div>
+
+                    <div
+                        style="
+                            background: #f0f8ff;
+                            padding: 16px;
+                            border-radius: 8px;
+                            margin: 20px 0;
+                        "
+                    >
+                        <div
+                            style="
+                                font-size: 14px;
+                                color: #333;
+                                margin-bottom: 8px;
+                            "
+                        >
+                            Current progress:
+                        </div>
+                        <div
+                            style="
+                                font-size: 12px;
+                                color: #666;
+                                margin-bottom: 4px;
+                            "
+                        >
+                            Original: 156.7 MB
+                        </div>
+                        <div
+                            style="
+                                font-size: 12px;
+                                color: #666;
+                                margin-bottom: 4px;
+                            "
+                        >
+                            Compressed: ~31 MB (estimated)
+                        </div>
+                        <div style="font-size: 12px; color: #666">
+                            Space saved: ~80%
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn-secondary"
+                        onclick="showScreen('video-result')"
+                    >
+                        Simulate Complete
+                    </button>
+                </div>
+            </div>
+
+            <!-- 18. Video Compressor - Result -->
+            <div class="screen" id="video-result">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>🔋 100%</span>
+                </div>
+                <div class="header">
+                    <button class="back-btn" onclick="showScreen('home')">
+                        ←
+                    </button>
+                    <h1>Compression Complete</h1>
+                </div>
+                <div class="content">
+                    <div class="success-container">
+                        <div class="success-icon">🎉</div>
+                        <div class="success-title">
+                            Video Compressed Successfully!
+                        </div>
+                        <div class="success-subtitle">
+                            File size reduced by 80%
+                        </div>
+                    </div>
+
+                    <div
+                        style="
+                            background: #f0f8ff;
+                            padding: 16px;
+                            border-radius: 8px;
+                            margin: 20px 0;
+                        "
+                    >
+                        <div
+                            style="
+                                font-size: 14px;
+                                color: #333;
+                                margin-bottom: 8px;
+                            "
+                        >
+                            <strong>Compression Results:</strong>
+                        </div>
+                        <div
+                            style="
+                                font-size: 12px;
+                                color: #666;
+                                margin-bottom: 4px;
+                            "
+                        >
+                            Original size: 156.7 MB
+                        </div>
+                        <div
+                            style="
+                                font-size: 12px;
+                                color: #666;
+                                margin-bottom: 4px;
+                            "
+                        >
+                            Compressed size: 31.2 MB
+                        </div>
+                        <div
+                            style="
+                                font-size: 12px;
+                                color: #666;
+                                margin-bottom: 4px;
+                            "
+                        >
+                            Space saved: 125.5 MB (80%)
+                        </div>
+                        <div style="font-size: 12px; color: #666">
+                            Processing time: 1m 45s
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="showScreen('home')">
+                        Back to Home
+                    </button>
+                    <button
+                        class="btn-secondary"
+                        onclick="showScreen('video-selector')"
+                    >
+                        Compress Another
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation buttons for demo -->
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="showScreen('home')">
+                Home
+            </button>
+            <button class="nav-btn" onclick="showScreen('instagram-input')">
+                Social
+            </button>
+            <button class="nav-btn" onclick="showScreen('whatsapp-status')">
+                Status
+            </button>
+            <button class="nav-btn" onclick="showScreen('direct-message')">
+                Message
+            </button>
+            <button class="nav-btn" onclick="showScreen('temp-email')">
+                Email
+            </button>
+            <button class="nav-btn" onclick="showScreen('video-selector')">
+                Video
+            </button>
+        </div>
+
+        <!-- Floating action buttons -->
+        <div class="floating-actions">
+            <button
+                class="fab"
+                onclick="previousScreen()"
+                title="Previous Screen"
+            >
+                ←
+            </button>
+            <button class="fab" onclick="nextScreen()" title="Next Screen">
+                →
+            </button>
+        </div>
+
+        <script>
+            const screens = [
+                "home",
+                "instagram-input",
+                "instagram-options",
+                "instagram-progress",
+                "instagram-success",
+                "whatsapp-status",
+                "status-browser",
+                "status-selection",
+                "direct-message",
+                "message-confirmation",
+                "temp-email",
+                "temp-email-active",
+                "temp-email-inbox",
+                "temp-email-detail",
+                "video-selector",
+                "video-settings",
+                "video-progress",
+                "video-result",
+            ];
+
+            let currentScreenIndex = 0;
+
+            function showScreen(screenId) {
+                // Hide all screens
+                document
+                    .querySelectorAll(".screen")
+                    .forEach((screen) => screen.classList.remove("active"));
+
+                // Show selected screen
+                document.getElementById(screenId).classList.add("active");
+
+                // Update screen indicator
+                currentScreenIndex = screens.indexOf(screenId);
+                document.getElementById("screenIndicator").textContent =
+                    `${currentScreenIndex + 1}/18`;
+
+                // Update nav buttons
+                const navButtons = document.querySelectorAll(".nav-btn");
+                navButtons.forEach((btn) => btn.classList.remove("active"));
+
+                // Activate appropriate nav button based on screen
+                const navMap = {
+                    home: 0,
+                    "instagram-input": 1,
+                    "instagram-options": 1,
+                    "instagram-progress": 1,
+                    "instagram-success": 1,
+                    "whatsapp-status": 2,
+                    "status-browser": 2,
+                    "status-selection": 2,
+                    "direct-message": 3,
+                    "message-confirmation": 3,
+                    "temp-email": 4,
+                    "temp-email-active": 4,
+                    "temp-email-inbox": 4,
+                    "temp-email-detail": 4,
+                    "video-selector": 5,
+                    "video-settings": 5,
+                    "video-progress": 5,
+                    "video-result": 5,
+                };
+
+                if (navMap.hasOwnProperty(screenId)) {
+                    navButtons[navMap[screenId]].classList.add("active");
+                }
+            }
+
+            function nextScreen() {
+                if (currentScreenIndex < screens.length - 1) {
+                    currentScreenIndex++;
+                    showScreen(screens[currentScreenIndex]);
+                }
+            }
+
+            function previousScreen() {
+                if (currentScreenIndex > 0) {
+                    currentScreenIndex--;
+                    showScreen(screens[currentScreenIndex]);
+                }
+            }
+
+            function toggleSelection(element) {
+                element.classList.toggle("selected");
+
+                // Update button text
+                const selectedCount = document.querySelectorAll(
+                    ".media-item.selected"
+                ).length;
+                const button = document.querySelector(
+                    "#status-browser .btn-primary"
+                );
+                button.textContent = `Save Selected (${selectedCount})`;
+            }
+
+            function copyEmail() {
+                // In a real app, this would copy to clipboard
+                alert("Email address copied to clipboard!");
+            }
+
+            // Add click handlers for download options
+            document.addEventListener("DOMContentLoaded", function () {
+                const downloadOptions =
+                    document.querySelectorAll(".download-option");
+                downloadOptions.forEach((option) => {
+                    option.addEventListener("click", function () {
+                        // Remove selected class from siblings
+                        const siblings =
+                            this.parentElement.querySelectorAll(
+                                ".download-option"
+                            );
+                        siblings.forEach((opt) =>
+                            opt.classList.remove("selected")
+                        );
+                        // Add selected class to clicked option
+                        this.classList.add("selected");
+                    });
+                });
+            });
+
+            // Keyboard navigation
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "ArrowRight") nextScreen();
+                if (e.key === "ArrowLeft") previousScreen();
+            });
+        </script>
+    </body>
+</html>

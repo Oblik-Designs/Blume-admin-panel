@@ -14,7 +14,7 @@ import {
     Empty,
 } from "antd";
 import { EditOutlined, DeleteOutlined, UserOutlined } from "@ant-design/icons";
-import BlumePointsDisplay from "./BlumePointsDisplay";
+import BeensPointsDisplay from "./BeensPointsDisplay";
 import UserLevelBadge from "./UserLevelBadge";
 import StatusBadge from "./StatusBadge";
 import PlanTypeBadge from "./PlanTypeBadge";
@@ -50,8 +50,8 @@ const BaseViewDrawer = ({
         if (value === null || value === undefined) return "-";
 
         switch (field.type) {
-            case "blumepoints":
-                return <BlumePointsDisplay amount={value} />;
+            case "beenspoints":
+                return <BeensPointsDisplay amount={value} />;
             case "user-level":
                 return (
                     <UserLevelBadge

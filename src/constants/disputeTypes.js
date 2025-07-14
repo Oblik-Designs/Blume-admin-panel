@@ -23,7 +23,7 @@ export const DISPUTE_TYPES = {
     PAYMENT_PROBLEMS: {
         key: "payment_problems",
         label: "Payment Problems",
-        description: "Issues with BlumePoints transactions",
+        description: "Issues with BeensPoints transactions",
         severity: "high",
         color: "red",
     },
@@ -54,12 +54,12 @@ export const DISPUTE_RESOLUTION_ACTIONS = {
     FULL_REFUND: {
         key: "full_refund",
         label: "Full Refund",
-        description: "Refund all BlumePoints to the participant",
+        description: "Refund all BeensPoints to the participant",
     },
     PARTIAL_REFUND: {
         key: "partial_refund",
         label: "Partial Refund",
-        description: "Refund partial BlumePoints to the participant",
+        description: "Refund partial BeensPoints to the participant",
     },
     HOST_PENALTY: {
         key: "host_penalty",

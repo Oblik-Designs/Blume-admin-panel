@@ -18,7 +18,7 @@ import BaseViewDrawer from "../../components/common/BaseViewDrawer";
 import ActionsDropdown from "../../components/common/ActionsDropdown";
 import PlanTypeBadge from "../../components/common/PlanTypeBadge";
 import StatusBadge from "../../components/common/StatusBadge";
-import BlumePointsDisplay from "../../components/common/BlumePointsDisplay";
+import BeensPointsDisplay from "../../components/common/BeensPointsDisplay";
 import { PLAN_STATUS_OPTIONS } from "../../constants/planTypes";
 import { useAPI } from "../../hooks/useAPI";
 import { api } from "../../api";
@@ -313,7 +313,7 @@ const Plans = () => {
                                 {record.max_participants}
                             </div>
                             {record.min_bp_per_participant && (
-                                <BlumePointsDisplay
+                                <BeensPointsDisplay
                                     amount={record.min_bp_per_participant}
                                     size="small"
                                     showUSD={false}
@@ -329,7 +329,7 @@ const Plans = () => {
                     render: (_, record) => (
                         <div>
                             {record.total_revenue_bp > 0 ? (
-                                <BlumePointsDisplay
+                                <BeensPointsDisplay
                                     amount={record.total_revenue_bp}
                                     size="small"
                                 />
@@ -516,9 +516,9 @@ const Plans = () => {
                     {
                         name: "min_bp_per_participant",
                         label: "Cost per Participant",
-                        type: "blumepoints",
+                        type: "beenspoints",
                         required: true,
-                        help: "Amount each participant will pay in BlumePoints",
+                        help: "Amount each participant will pay in BeensPoints",
                     },
                     {
                         name: "min_age",
@@ -621,7 +621,7 @@ const Plans = () => {
                     {
                         key: "min_bp_per_participant",
                         label: "Cost per Participant",
-                        type: "blumepoints",
+                        type: "beenspoints",
                     },
                     { key: "total_applications", label: "Total Applications" },
                     { key: "min_age", label: "Min Age" },
@@ -641,7 +641,7 @@ const Plans = () => {
                     {
                         key: "total_revenue_bp",
                         label: "Total Revenue",
-                        type: "blumepoints",
+                        type: "beenspoints",
                     },
                     { key: "avg_rating", label: "Average Rating" },
                     { key: "created_at", label: "Created", type: "datetime" },

@@ -130,7 +130,7 @@ const Reports = () => {
             <div style={{ marginBottom: 24 }}>
                 <Title level={2}>Reports & Analytics</Title>
                 <Text type="secondary">
-                    Comprehensive analytics and reporting for the Blume platform
+                    Comprehensive analytics and reporting for the Beens platform
                 </Text>
             </div>
             {/* Report Controls */}

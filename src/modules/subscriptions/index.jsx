@@ -27,7 +27,7 @@ import {
 import BaseTable from "../../components/common/BaseTable";
 import BaseViewDrawer from "../../components/common/BaseViewDrawer";
 import StatusBadge from "../../components/common/StatusBadge";
-import BlumePointsDisplay from "../../components/common/BlumePointsDisplay";
+import BeensPointsDisplay from "../../components/common/BeensPointsDisplay";
 import { SUBSCRIPTION_OPTIONS } from "../../constants/userStatuses";
 import { useAPI } from "../../hooks/useAPI";
 import { api } from "../../api";
@@ -145,7 +145,7 @@ const Subscriptions = () => {
                     key: "billing",
                     render: (_, record) => (
                         <Space direction="vertical" size="small">
-                            <BlumePointsDisplay
+                            <BeensPointsDisplay
                                 amount={record.monthly_cost}
                                 size="small"
                                 showUSD={true}
@@ -268,7 +268,7 @@ const Subscriptions = () => {
                     {
                         key: "monthly_cost",
                         label: "Monthly Cost",
-                        type: "blumepoints",
+                        type: "beenspoints",
                     },
                 ],
             },

@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import AdminLayout from "./components/layout/AdminLayout";
 
 import Dashboard from "./modules/dashboard";
@@ -14,102 +14,134 @@ import Disputes from "./modules/disputes";
 import Subscriptions from "./modules/subscriptions";
 import Reports from "./modules/reports";
 import System from "./modules/system";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import LoginPage from "./components/auth/LoginPage";
+
+// Error Boundary Component
+const ErrorBoundary = ({ children }) => {
+    return children;
+};
+
+// Protected Admin Routes Component
+const ProtectedAdminRoute = ({ children, requiredRole = null }) => (
+    <ProtectedRoute requiredRole={requiredRole}>
+        <AdminLayout>
+            <ErrorBoundary>{children}</ErrorBoundary>
+        </AdminLayout>
+    </ProtectedRoute>
+);
 
 export const router = createBrowserRouter([
+    // Public routes
+    {
+        path: "/login",
+        element: <LoginPage />,
+    },
+
     {
         path: "/",
         element: (
-            <AdminLayout>
+            <ProtectedAdminRoute>
                 <Dashboard />
-            </AdminLayout>
+            </ProtectedAdminRoute>
         ),
+    },
+    {
+        path: "/dashboard",
+        element: <Navigate to="/" replace />,
     },
     {
         path: "/users",
         element: (
-            <AdminLayout>
+            <ProtectedAdminRoute>
                 <Users />
-            </AdminLayout>
+            </ProtectedAdminRoute>
         ),
     },
     {
         path: "/plans",
         element: (
-            <AdminLayout>
+            <ProtectedAdminRoute>
                 <Plans />
-            </AdminLayout>
+            </ProtectedAdminRoute>
         ),
     },
     {
         path: "/applications",
         element: (
-            <AdminLayout>
+            <ProtectedAdminRoute>
                 <Applications />
-            </AdminLayout>
+            </ProtectedAdminRoute>
         ),
     },
     {
         path: "/chats",
         element: (
-            <AdminLayout>
+            <ProtectedAdminRoute>
                 <Chats />
-            </AdminLayout>
+            </ProtectedAdminRoute>
         ),
     },
     {
         path: "/reviews",
         element: (
-            <AdminLayout>
+            <ProtectedAdminRoute>
                 <Reviews />
-            </AdminLayout>
+            </ProtectedAdminRoute>
         ),
     },
     {
         path: "/financial",
         element: (
-            <AdminLayout>
+            <ProtectedAdminRoute>
                 <Financial />
-            </AdminLayout>
+            </ProtectedAdminRoute>
         ),
     },
     {
         path: "/verification",
         element: (
-            <AdminLayout>
+            <ProtectedAdminRoute>
                 <Verification />
-            </AdminLayout>
+            </ProtectedAdminRoute>
         ),
     },
     {
         path: "/disputes",
         element: (
-            <AdminLayout>
+            <ProtectedAdminRoute>
                 <Disputes />
-            </AdminLayout>
+            </ProtectedAdminRoute>
         ),
     },
     {
         path: "/subscriptions",
         element: (
-            <AdminLayout>
+            <ProtectedAdminRoute>
                 <Subscriptions />
-            </AdminLayout>
+            </ProtectedAdminRoute>
         ),
     },
     {
         path: "/reports",
         element: (
-            <AdminLayout>
+            <ProtectedAdminRoute>
                 <Reports />
-            </AdminLayout>
+            </ProtectedAdminRoute>
         ),
     },
     {
         path: "/system",
         element: (
-            <AdminLayout>
+            <ProtectedAdminRoute>
                 <System />
-            </AdminLayout>
+            </ProtectedAdminRoute>
         ),
+    },
+
+    // Catch-all redirect
+    {
+        path: "*",
+        element: <Navigate to="/" replace />,
     },
 ]);

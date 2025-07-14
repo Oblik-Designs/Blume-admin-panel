@@ -24,7 +24,7 @@ const PlanTypeBadge = ({ type, showIcon = true, size = "default" }) => {
                 label: "Bidding",
                 color: "gold",
                 icon: <TrophyOutlined />,
-                description: "Users bid BlumePoints for exclusive spots",
+                description: "Users bid BeensPoints for exclusive spots",
             },
         };
         return configs[type] || configs[2];

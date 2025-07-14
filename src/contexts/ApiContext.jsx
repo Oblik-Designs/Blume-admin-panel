@@ -14,7 +14,7 @@ export const ApiProvider = ({ children }) => {
         baseUrl: APP_CONFIG.BASE_URL,
         mockDelay: APP_CONFIG.MOCK_DELAY,
         features: APP_CONFIG.FEATURES,
-        blumePoints: APP_CONFIG.BLUME_POINTS,
+        beensPoints: APP_CONFIG.BEENS_POINTS,
     };
     return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 };

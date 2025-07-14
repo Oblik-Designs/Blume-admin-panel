@@ -25,7 +25,7 @@ import BaseTable from "../../components/common/BaseTable";
 import BaseViewDrawer from "../../components/common/BaseViewDrawer";
 import ActionsDropdown from "../../components/common/ActionsDropdown";
 import StatusBadge from "../../components/common/StatusBadge";
-import BlumePointsDisplay from "../../components/common/BlumePointsDisplay";
+import BeensPointsDisplay from "../../components/common/BeensPointsDisplay";
 import { useAPI } from "../../hooks/useAPI";
 import { api } from "../../api";
 
@@ -253,7 +253,7 @@ const Applications = () => {
                             record.bid_amount
                         ) {
                             return (
-                                <BlumePointsDisplay
+                                <BeensPointsDisplay
                                     amount={record.bid_amount}
                                     size="small"
                                 />
@@ -356,7 +356,7 @@ const Applications = () => {
                     {
                         key: "bid_amount",
                         label: "Bid Amount",
-                        type: "blumepoints",
+                        type: "beenspoints",
                     },
                     {
                         key: "created_at",

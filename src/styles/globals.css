@@ -14,7 +14,7 @@ body {
     background-color: #f5f5f5;
 }
 
-/* Blume branding */
+/* Beens branding */
 .blume-logo {
     background: linear-gradient(45deg, #722ed1, #eb2f96);
     background-clip: text;
@@ -25,7 +25,7 @@ body {
 .blume-gradient {
     background: linear-gradient(45deg, #722ed1, #eb2f96);
 }
-/* BlumePoints styling */
+/* BeensPoints styling */
 .bp-amount {
     color: #722ed1;
     font-weight: 600;

@@ -21,7 +21,7 @@ import {
     ShoppingOutlined,
     ReloadOutlined,
 } from "@ant-design/icons";
-import BlumePointsDisplay from "../../components/common/BlumePointsDisplay";
+import BeensPointsDisplay from "../../components/common/BeensPointsDisplay";
 import { api } from "../../api";
 const { Title, Text } = Typography;
 const Dashboard = () => {
@@ -68,7 +68,7 @@ const Dashboard = () => {
             />
         );
     }
-    const formatBlumePoints = (points) => {
+    const formatBeensPoints = (points) => {
         return (points / 1000).toLocaleString(undefined, {
             minimumFractionDigits: 0,
             maximumFractionDigits: 0,
@@ -191,7 +191,7 @@ const Dashboard = () => {
                                 marginTop: 8,
                             }}
                         >
-                            From BlumePoints service fees
+                            From BeensPoints service fees
                         </Text>
                     </Card>
                 </Col>
@@ -199,7 +199,7 @@ const Dashboard = () => {
                     <Card>
                         <Statistic
                             title="BP Circulating"
-                            value={formatBlumePoints(
+                            value={formatBeensPoints(
                                 stats?.financial?.total_bp_circulating || 0
                             )}
                             prefix={
@@ -208,7 +208,7 @@ const Dashboard = () => {
                             suffix="K"
                             valueStyle={{ color: "#722ed1" }}
                         />
-                        <BlumePointsDisplay
+                        <BeensPointsDisplay
                             amount={stats?.financial?.total_bp_circulating || 0}
                             showIcon={false}
                             size="small"
@@ -320,7 +320,7 @@ const Dashboard = () => {
                                 }}
                             >
                                 <Text>Avg Transaction</Text>
-                                <BlumePointsDisplay
+                                <BeensPointsDisplay
                                     amount={
                                         stats?.financial?.avg_transaction || 0
                                     }

@@ -27,7 +27,7 @@ import BaseViewDrawer from "../../components/common/BaseViewDrawer";
 import ActionsDropdown from "../../components/common/ActionsDropdown";
 import UserLevelBadge from "../../components/common/UserLevelBadge";
 import StatusBadge from "../../components/common/StatusBadge";
-import BlumePointsDisplay from "../../components/common/BlumePointsDisplay";
+import BeensPointsDisplay from "../../components/common/BeensPointsDisplay";
 import {
     USER_STATUS_OPTIONS,
     LEVEL_OPTIONS,
@@ -324,19 +324,19 @@ const Users = () => {
                     key: "wallet",
                     render: (_, record) => (
                         <div>
-                            <BlumePointsDisplay
-                                amount={record.wallet?.blume_points || 0}
+                            <BeensPointsDisplay
+                                amount={record.wallet?.beens_points || 0}
                                 size="small"
                                 showUSD={true}
                             />
-                            {record.wallet?.escrow_blume_points > 0 && (
+                            {record.wallet?.escrow_beens_points > 0 && (
                                 <div style={{ marginTop: 4 }}>
                                     <Text
                                         type="secondary"
                                         style={{ fontSize: "11px" }}
                                     >
                                         Escrow:{" "}
-                                        {record.wallet.escrow_blume_points} BP
+                                        {record.wallet.escrow_beens_points} BP
                                     </Text>
                                 </div>
                             )}
@@ -588,19 +588,19 @@ const Users = () => {
                 columns: 2,
                 fields: [
                     {
-                        key: "wallet.blume_points",
+                        key: "wallet.beens_points",
                         label: "Available BP",
-                        type: "blumepoints",
+                        type: "beenspoints",
                     },
                     {
-                        key: "wallet.escrow_blume_points",
+                        key: "wallet.escrow_beens_points",
                         label: "Escrow BP",
-                        type: "blumepoints",
+                        type: "beenspoints",
                     },
                     {
                         key: "total_bp_spent",
                         label: "Total BP Spent",
-                        type: "blumepoints",
+                        type: "beenspoints",
                     },
                 ],
             },
@@ -660,8 +660,8 @@ const Users = () => {
                 <Form onFinish={handleWalletSubmit} layout="vertical">
                     <div style={{ marginBottom: 16 }}>
                         <Text strong>Current Balance: </Text>
-                        <BlumePointsDisplay
-                            amount={selectedUser?.wallet?.blume_points || 0}
+                        <BeensPointsDisplay
+                            amount={selectedUser?.wallet?.beens_points || 0}
                         />
                     </div>
                     <Form.Item

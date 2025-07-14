@@ -10,8 +10,8 @@ export const APP_CONFIG = {
     BASE_URL: process.env.REACT_APP_API_BASE_URL || "http://localhost:8080/api",
     API_VERSION: "v1",
 
-    // Blume Platform Configuration
-    BLUME_POINTS: {
+    // Beens Platform Configuration
+    BEENS_POINTS: {
         USD_CONVERSION: 1000, // 1000 BP = $1
         SERVICE_FEE_PERCENT: 10,
     },

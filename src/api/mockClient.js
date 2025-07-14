@@ -548,7 +548,7 @@ export class MockApiClient {
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `blume_${type}_export.${format}`;
+        a.download = `beens_${type}_export.${format}`;
         a.click();
         URL.revokeObjectURL(url);
         return {

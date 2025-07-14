@@ -27,7 +27,7 @@ import {
 import BaseTable from "../../components/common/BaseTable";
 import BaseViewDrawer from "../../components/common/BaseViewDrawer";
 import StatusBadge from "../../components/common/StatusBadge";
-import BlumePointsDisplay from "../../components/common/BlumePointsDisplay";
+import BeensPointsDisplay from "../../components/common/BeensPointsDisplay";
 import {
     DISPUTE_TYPES,
     DISPUTE_STATUS_OPTIONS,
@@ -178,7 +178,7 @@ const Disputes = () => {
                     key: "amount",
                     render: (_, record) =>
                         record.disputed_amount ? (
-                            <BlumePointsDisplay
+                            <BeensPointsDisplay
                                 amount={record.disputed_amount}
                                 size="small"
                             />
@@ -286,7 +286,7 @@ const Disputes = () => {
                     {
                         key: "disputed_amount",
                         label: "Disputed Amount",
-                        type: "blumepoints",
+                        type: "beenspoints",
                     },
                     { key: "created_at", label: "Created", type: "datetime" },
                     { key: "resolved_at", label: "Resolved", type: "datetime" },
@@ -382,7 +382,7 @@ const Disputes = () => {
                     <Form.Item
                         name="refund_amount"
                         label="Refund Amount (if applicable)"
-                        help="Enter amount in BlumePoints"
+                        help="Enter amount in BeensPoints"
                     >
                         <InputNumber
                             style={{ width: "100%" }}

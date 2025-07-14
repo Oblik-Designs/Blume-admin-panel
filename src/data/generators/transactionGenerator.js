@@ -49,7 +49,7 @@ export const generateTransaction = (userId = null, index = 0) => {
     const getDescription = (type, amount) => {
         switch (type) {
             case "bp_purchase":
-                return `Purchased ${amount} BlumePoints`;
+                return `Purchased ${amount} BeensPoints`;
             case "plan_payment":
                 return `Payment for plan participation`;
             case "plan_earning":
